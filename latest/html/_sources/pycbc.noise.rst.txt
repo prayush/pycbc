@@ -1,0 +1,22 @@
+pycbc\.noise package
+====================
+
+Submodules
+----------
+
+pycbc\.noise\.gaussian module
+-----------------------------
+
+.. automodule:: pycbc.noise.gaussian
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
+Module contents
+---------------
+
+.. automodule:: pycbc.noise
+    :members:
+    :undoc-members:
+    :show-inheritance:

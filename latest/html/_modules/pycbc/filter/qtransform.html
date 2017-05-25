@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>pycbc.filter.qtransform &mdash; PyCBC d9357b documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  
+
+  
+    <link rel="stylesheet" href="../../../_static/terminal.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index"
+              href="../../../genindex.html"/>
+        <link rel="search" title="Search" href="../../../search.html"/>
+    <link rel="top" title="PyCBC d9357b documentation" href="../../../index.html"/>
+        <link rel="up" title="pycbc" href="../../pycbc.html"/> 
+
+  
+  <script src="../../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> PyCBC
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                None
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../credit.html">Use of PyCBC in Scientific Publications</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../docker.html">Running PyCBC under Docker</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../install.html">Installing PyCBC</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow/pycbc_make_psd_estimation_workflow.html"><code class="docutils literal"><span class="pre">pycbc_make_psd_estimation_workflow</span></code>: A workflow generator for noise estimation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow/pycbc_make_coinc_search_workflow.html"><code class="docutils literal"><span class="pre">pycbc_make_coinc_search_workflow</span></code>: A workflow to search for gravitational waves</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow/pygrb.html"><code class="docutils literal"><span class="pre">pycbc_make_offline_grb_workflow</span></code>: A GRB triggered CBC analysis workflow generator</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow/pycbc_make_inference_workflow.html"><code class="docutils literal"><span class="pre">pycbc_make_inference_workflow</span></code>: A parameter estimation workflow generator</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tmpltbank.html">PyCBC template bank generation documentation (<code class="docutils literal"><span class="pre">pycbc.tmpltbank</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../inference.html">PyCBC inference documentation (<code class="docutils literal"><span class="pre">pycbc.inference</span></code>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../hwinj.html">Hardware injection waveform generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../banksim.html">Calculating the Effectualness (Fitting Factor) of Template Banks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../faithsim.html">Dag Generator for Doing Faithfulness Comparisons</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../upload_to_gracedb.html">Uploading triggers to gracedb</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../gw150914.html">Signal Processing with GW150914</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../frame.html">Reading Gravitational-wave Frames</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../psd.html">Handling PSDs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../noise.html">Generating Noise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../waveform.html">Waveforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filter.html">Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../distributions.html">Using PyCBC Distributions from PyCBC Inference</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../building_bundled_executables.html">Building Bundled Executables</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../documentation.html">Documenting PyCBC code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../release.html">Creating Releases of PyCBC</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../formats/hdf_format.html">HDF files within the PyCBC workflow</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../workflow.html">Workflow: the inspiral analysis workflow generator (<code class="docutils literal"><span class="pre">pycbc.workflow</span></code>)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">pycbc</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PyCBC</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+          <li><a href="../../pycbc.html">pycbc</a> &raquo;</li>
+        
+      <li>pycbc.filter.qtransform</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for pycbc.filter.qtransform</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Copyright (C) 2017  Hunter A. Gabbard, Andrew Lundgren, Duncan Macleod</span>
+<span class="c1">#</span>
+<span class="c1"># This program is free software; you can redistribute it and/or modify it</span>
+<span class="c1"># under the terms of the GNU General Public License as published by the</span>
+<span class="c1"># Free Software Foundation; either version 3 of the License, or (at your</span>
+<span class="c1"># option) any later version.</span>
+<span class="c1">#</span>
+<span class="c1"># This program is distributed in the hope that it will be useful, but</span>
+<span class="c1"># WITHOUT ANY WARRANTY; without even the implied warranty of</span>
+<span class="c1"># MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General</span>
+<span class="c1"># Public License for more details.</span>
+<span class="c1">#</span>
+<span class="c1"># You should have received a copy of the GNU General Public License along</span>
+<span class="c1"># with this program; if not, write to the Free Software Foundation, Inc.,</span>
+<span class="c1"># 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.</span>
+
+
+<span class="c1">#</span>
+<span class="c1"># =============================================================================</span>
+<span class="c1">#</span>
+<span class="c1">#                                   Preamble</span>
+<span class="c1">#</span>
+<span class="c1"># =============================================================================</span>
+<span class="c1">#</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">This module retrives a timeseries and then calculates the q-transform of that time series</span>
+
+<span class="sd">Example</span>
+<span class="sd">-------</span>
+<span class="sd">    $ python q-transform.py -s 4096 -u test -o /Users/pycbc_qtransform</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">math</span> <span class="k">import</span> <span class="n">pi</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pycbc.strain</span>  <span class="k">import</span> <span class="n">next_power_of_2</span>
+<span class="kn">from</span> <span class="nn">pycbc.types.timeseries</span> <span class="k">import</span> <span class="n">FrequencySeries</span><span class="p">,</span> <span class="n">TimeSeries</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="k">import</span> <span class="n">fft</span> <span class="k">as</span> <span class="n">npfft</span>
+
+
+<div class="viewcode-block" id="qtransform"><a class="viewcode-back" href="../../../pycbc.filter.html#pycbc.filter.qtransform.qtransform">[docs]</a><span class="k">def</span> <span class="nf">qtransform</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Q</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">normalized</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Calculate the energy &#39;TimeSeries&#39; for the given fseries</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data: &#39;LIGO gwf frame file&#39;</span>
+<span class="sd">        raw time-series data set</span>
+<span class="sd">    normalized: &#39;bool&#39;, optional</span>
+<span class="sd">        normalize the energy of the output, if &#39;False&#39; the output</span>
+<span class="sd">        is the complex &#39;~numpy.fft.ifft&#39; output of the Q-tranform</span>
+<span class="sd">    f0:</span>
+<span class="sd">        central frequency</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    energy: &#39;~pycbc.types.aligned.ArrayWithAligned&#39;</span>
+<span class="sd">        A &#39;TimeSeries&#39; of the complex energy from the Q-transform of </span>
+<span class="sd">        this tile against the data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># q-transform data for each (Q, frequency) tile</span>
+
+    <span class="c1"># initialize parameters</span>
+    <span class="n">qprime</span> <span class="o">=</span> <span class="n">Q</span> <span class="o">/</span> <span class="mi">11</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span>
+    <span class="n">dur</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">duration</span>
+    <span class="n">fseries</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="o">.</span><span class="n">to_frequencyseries</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># window fft</span>
+    <span class="n">window_size</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">f0</span> <span class="o">/</span> <span class="n">qprime</span> <span class="o">*</span> <span class="n">dur</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># get indices</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">_get_indices</span><span class="p">(</span><span class="n">window_size</span><span class="p">)</span>
+
+    <span class="c1"># apply window to fft</span>
+    <span class="n">windowed</span> <span class="o">=</span> <span class="n">fseries</span><span class="p">[</span><span class="n">get_data_indices</span><span class="p">(</span><span class="n">dur</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">indices</span><span class="p">)]</span> <span class="o">*</span> <span class="n">get_window</span><span class="p">(</span><span class="n">window_size</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">qprime</span><span class="p">)</span>
+
+    <span class="c1"># Choice of output sampling rate</span>
+    <span class="n">output_sampling</span> <span class="o">=</span> <span class="n">fseries</span><span class="o">.</span><span class="n">delta_f</span> <span class="c1"># Can lower this to highest bandwidth</span>
+    <span class="n">output_samples</span> <span class="o">=</span> <span class="n">dur</span> <span class="o">*</span> <span class="n">output_sampling</span>
+
+    <span class="c1"># pad data, move negative frequencies to the end, and IFFT</span>
+    <span class="n">padded</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">windowed</span><span class="p">,</span> <span class="n">padding</span><span class="p">(</span><span class="n">window_size</span><span class="p">,</span> <span class="n">output_samples</span><span class="p">),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;constant&#39;</span><span class="p">)</span>
+    <span class="n">wenergy</span> <span class="o">=</span> <span class="n">npfft</span><span class="o">.</span><span class="n">ifftshift</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
+
+    <span class="c1"># return a &#39;TimeSeries&#39;</span>
+    <span class="n">wenergy</span> <span class="o">=</span> <span class="n">FrequencySeries</span><span class="p">(</span><span class="n">wenergy</span><span class="p">,</span> <span class="n">delta_f</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="n">dur</span><span class="p">)</span>
+    <span class="n">tdenergy</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">zeros</span><span class="p">(</span><span class="n">output_samples</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">),</span>
+                            <span class="n">delta_t</span><span class="o">=</span><span class="mf">1.</span><span class="o">/</span><span class="n">output_sampling</span><span class="p">)</span>
+    <span class="n">ifft</span><span class="p">(</span><span class="n">wenergy</span><span class="p">,</span> <span class="n">tdenergy</span><span class="p">)</span>
+    <span class="n">cenergy</span> <span class="o">=</span> <span class="n">TimeSeries</span><span class="p">(</span><span class="n">tdenergy</span><span class="p">,</span>
+                         <span class="n">delta_t</span><span class="o">=</span><span class="n">tdenergy</span><span class="o">.</span><span class="n">delta_t</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">normalized</span><span class="p">:</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">cenergy</span><span class="p">)(</span>
+            <span class="n">cenergy</span><span class="o">.</span><span class="n">real</span><span class="p">()</span> <span class="o">**</span> <span class="mf">2.</span> <span class="o">+</span> <span class="n">cenergy</span><span class="o">.</span><span class="n">imag</span><span class="p">()</span> <span class="o">**</span> <span class="mf">2.</span><span class="p">,</span>
+            <span class="n">delta_t</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">medianenergy</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">numpy</span><span class="p">()</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">energy</span> <span class="o">/</span> <span class="n">medianenergy</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">cenergy</span>
+
+    <span class="k">return</span> <span class="n">result</span></div>
+
+
+<div class="viewcode-block" id="padding"><a class="viewcode-back" href="../../../pycbc.filter.html#pycbc.filter.qtransform.padding">[docs]</a><span class="k">def</span> <span class="nf">padding</span><span class="p">(</span><span class="n">window_size</span><span class="p">,</span> <span class="n">desired_size</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The (left, right) padding required for the IFFT</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    window_size: int</span>
+<span class="sd">        Size of window</span>
+<span class="sd">    desired_size: int</span>
+<span class="sd">        Desired size of window</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tuple</span>
+<span class="sd">       Number of values padded to the edges of each axis. </span>
+<span class="sd"> </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pad</span> <span class="o">=</span> <span class="n">desired_size</span> <span class="o">-</span> <span class="n">window_size</span>
+    <span class="k">return</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">pad</span><span class="o">/</span><span class="mf">2.</span><span class="p">),</span> <span class="nb">int</span><span class="p">((</span><span class="n">pad</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mf">2.</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="get_data_indices"><a class="viewcode-back" href="../../../pycbc.filter.html#pycbc.filter.qtransform.get_data_indices">[docs]</a><span class="k">def</span> <span class="nf">get_data_indices</span><span class="p">(</span><span class="n">dur</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Returns the index array of interesting frequencies for this row</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dur: int</span>
+<span class="sd">        Duration of timeseries in seconds</span>
+<span class="sd">    f0: int</span>
+<span class="sd">        Central frequency</span>
+<span class="sd">    indices: numpy.ndarray</span>
+<span class="sd">        window indices for fft </span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        Returns index array of interesting frequencies for this row</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">indices</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">+</span>
+                       <span class="n">f0</span> <span class="o">*</span> <span class="n">dur</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span></div>
+
+<span class="k">def</span> <span class="nf">_get_indices</span><span class="p">(</span><span class="n">window_size</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Windows indices for fft</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ---------</span>
+<span class="sd">    window_size: int</span>
+<span class="sd">        size of window</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    numpy.ndarray</span>
+<span class="sd">        Window indices for fft using total duration of segment</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">half</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">windowsize</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="n">half</span><span class="p">,</span> <span class="n">half</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="get_window"><a class="viewcode-back" href="../../../pycbc.filter.html#pycbc.filter.qtransform.get_window">[docs]</a><span class="k">def</span> <span class="nf">get_window</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">qprime</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate the bi-square window for this row</span>
+<span class="sd"> </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ---------</span>
+<span class="sd">    size: int</span>
+<span class="sd">        size of window</span>
+<span class="sd">    f0: int</span>
+<span class="sd">        Central frequency</span>
+<span class="sd">    qprime: int</span>
+<span class="sd">        Normalized Q (q/sqrt(11))</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    window : numpy.ndarray</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># dimensionless frequencies</span>
+    <span class="n">xfrequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+
+    <span class="c1"># normalize and generate bi-square window</span>
+    <span class="c1"># ported from https://github.com/gwpy/gwpy/blob/master/gwpy/signal/qtransform.py</span>
+    <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">315.</span> <span class="o">*</span> <span class="n">qprime</span> <span class="o">/</span> <span class="p">(</span><span class="mf">128.</span> <span class="o">*</span> <span class="n">f0</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">xfrequencies</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">norm</span></div>
+
+<div class="viewcode-block" id="n_tiles"><a class="viewcode-back" href="../../../pycbc.filter.html#pycbc.filter.qtransform.n_tiles">[docs]</a><span class="k">def</span> <span class="nf">n_tiles</span><span class="p">(</span><span class="n">dur</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">Q</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The number of tiles in this row </span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dur: int</span>
+<span class="sd">        Duration of timeseries in seconds</span>
+<span class="sd">    f0: int</span>
+<span class="sd">        Central frequency</span>
+<span class="sd">    Q: int</span>
+<span class="sd">        q value</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    :type: &#39;int&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># ported from https://github.com/gwpy/gwpy/blob/master/gwpy/signal/qtransform.py</span>
+    <span class="n">tcum_mismatch</span> <span class="o">=</span> <span class="n">dur</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">f0</span> <span class="o">/</span> <span class="n">Q</span>  
+    <span class="k">return</span> <span class="n">next_power_of_2</span><span class="p">(</span><span class="n">tcum_mismatch</span> <span class="o">/</span> <span class="n">deltam</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="deltam"><a class="viewcode-back" href="../../../pycbc.filter.html#pycbc.filter.qtransform.deltam">[docs]</a><span class="k">def</span> <span class="nf">deltam</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Fractional mismatch between neighbouring tiles</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    None</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    :type: &#39;float&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mismatch</span> <span class="o">=</span> <span class="mf">0.2</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">mismatch</span> <span class="o">/</span> <span class="mf">3.</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mf">2.</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2015, 2016, 2017, Alexander Nitz, Ian Harry, Christopher M. Biwer, Duncan A.  Brown, Josh Willis, and Tito Dal Canton.
+      Last updated on May 25, 2017.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../../',
+            VERSION:'d9357b',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../../_static/doctools.js"></script>
+      <script type="text/javascript" src="../../../_static/typed.min.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>
