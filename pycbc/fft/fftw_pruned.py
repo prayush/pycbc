@@ -11,7 +11,7 @@ http://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm
 I use a similar naming convention here, with minor simplifications to the
 twiddle factors.
 """
-import numpy, scipy.weave, ctypes, pycbc.types
+import numpy, weave as scipy.weave, ctypes, pycbc.types
 from pycbc import WEAVE_FLAGS
 from pycbc.libutils import get_ctypes_library
 

@@ -23,7 +23,7 @@
 #
 import numpy, pycbc
 from pycbc.types import real_same_precision_as
-from scipy.weave import inline
+from weave import inline
 from pycbc import WEAVE_FLAGS
 
 if pycbc.HAVE_OMP:

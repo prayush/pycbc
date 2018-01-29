@@ -130,7 +130,7 @@ def findchirp_cluster_over_window(times, values, window_length):
     """
     assert window_length > 0, 'Clustering window length is not positive'
 
-    from scipy.weave import inline
+    from weave import inline
     indices = numpy.zeros(len(times), dtype=int)
     tlen = len(times)
     k = numpy.zeros(1, dtype=int)

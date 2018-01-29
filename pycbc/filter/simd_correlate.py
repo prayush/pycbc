@@ -15,7 +15,7 @@
 # 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 from pycbc.types import float32
-from scipy.weave import inline
+from weave import inline
 from pycbc import WEAVE_FLAGS
 import numpy as _np
 import pycbc.opt
