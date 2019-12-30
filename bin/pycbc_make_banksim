@@ -294,6 +294,7 @@ from numpy import *
 from glue.ligolw import utils, table
 import glob
 
+from glue.ligolw import ligolw
 from glue.ligolw.ligolw import LIGOLWContentHandler
 from glue.ligolw import lsctables
 class mycontenthandler(LIGOLWContentHandler):
@@ -319,8 +320,12 @@ f = open("results.dat", "w")
 for row in res: 
     outstr = ""
     if row['bank'] not in btables:
-        indoc = utils.load_filename(row['bank'], False, contenthandler=mycontenthandler)
-        btables[row['bank']] = table.get_table(indoc, "sngl_inspiral") 
+        indoc = utils.load_filename(row['bank'],
+                  contenthandler=table.use_in(ligolw.LIGOLWContentHandler),
+                                    verbose=True)
+        btables[row['bank']] = lsctables.SimInspiralTable.get_table(indoc)
+        # indoc = utils.load_filename(row['bank'], False, contenthandler=mycontenthandler)
+        # btables[row['bank']] = table.get_table(indoc, "sngl_inspiral") 
 
     if row['sim'] not in itables:
         indoc = utils.load_filename(row['sim'], False, contenthandler=mycontenthandler)
