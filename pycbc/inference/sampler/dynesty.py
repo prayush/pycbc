@@ -68,7 +68,7 @@ class DynestySampler(BaseSampler):
     name = "dynesty"
     _io = DynestyFile
 
-    def __init__(self, model, nlive, nprocesses=1,
+    def __init__(self, model, nlive=None, nprocesses=1,
                  loglikelihood_function=None, use_mpi=False, run_kwds=None,
                  **kwargs):
         self.model = model
@@ -82,22 +82,21 @@ class DynestySampler(BaseSampler):
             pool.size = nprocesses
 
         self.run_kwds = {} if run_kwds is None else run_kwds
-        self.nlive = nlive
+        self.nlive = 0 if nlive is None else nlive
         self.names = model.sampling_params
         self.ndim = len(model.sampling_params)
         self.checkpoint_file = None
-        if self.nlive < 0:
-            # Interpret a negative input value for the number of live points
-            # (which is clearly an invalid input in all senses)
-            # as the desire to dynamically determine that number
-            self._sampler = dynesty.DynamicNestedSampler(log_likelihood_call,
-                                                         prior_call, self.ndim,
-                                                         pool=pool, **kwargs)
-        else:
+        if self.nlive:
             self._sampler = dynesty.NestedSampler(log_likelihood_call,
                                                   prior_call, self.ndim,
                                                   nlive=self.nlive,
                                                   pool=pool, **kwargs)
+        else:
+            # Interpret not providing nlive
+            # as the desire to dynamically determine that number
+            self._sampler = dynesty.DynamicNestedSampler(log_likelihood_call,
+                                                         prior_call, self.ndim,
+                                                         pool=pool, **kwargs)
 
     def run(self):
         self._sampler.run_nested(**self.run_kwds)
@@ -121,7 +120,9 @@ class DynestySampler(BaseSampler):
         assert cp.get(section, "name") == cls.name, (
             "name in section [sampler] must match mine")
         # get the number of live points to use
-        nlive = int(cp.get(section, "nlive"))
+        nlive = None
+        if cp.has_option(section, "nlive"):
+            nlive = int(cp.get(section, "nlive"))
         loglikelihood_function = \
             get_optional_arg_from_config(cp, section, 'loglikelihood-function')
 
