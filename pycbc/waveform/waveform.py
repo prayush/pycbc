@@ -586,21 +586,147 @@ def get_td_waveform(template=None, **kwargs):
         The cross polarization of the waveform.
     """
     input_params = props(template, **kwargs)
-    wav_gen = td_wav[type(_scheme.mgr.state)]
-    if input_params['approximant'] not in wav_gen:
-        raise ValueError("Approximant %s not available" %
-                            (input_params['approximant']))
-    wav_gen = wav_gen[input_params['approximant']]
-    if hasattr(wav_gen, 'required'):
-        required = wav_gen.required
+    if "ESIGMA" in input_params["approximant"]:
+        from gwnr.waveform import esigma_utils
+
+        os.environ["RadiationPNOrder"] = "8"
+        os.environ["ModePNOrder"] = "8"
+        os.environ["InspiralEndRadius"] = "4.0"
+
+        verbose = input_params.get("verbose", False)
+        if verbose: print(f"Assigning eccentricity a value now")
+        if 'alpha' in input_params:
+            eccentricity = float(input_params.get("alpha", 0))
+            if verbose:
+                print(f"Using eccentricity from `alpha` column, value = {eccentricity}")
+        elif "eccentricity" in input_params:
+            eccentricity = float(input_params.get("eccentricity", 0))
+            if verbose:
+                print(f"Using eccentricity from `eccentricity` column, value = {eccentricity}")
+
+        if verbose: print(f"Assigning mean_anomaly a value now")
+        if 'alpha1' in input_params:
+            mean_anomaly = float(input_params.get("alpha1", 0))
+            if verbose:
+                print(f"Using mean_anomaly from `alpha1` column, value = {mean_anomaly}")
+        elif "mean_anomaly" in input_params:
+            mean_anomaly = float(input_params.get("mean_anomaly", 0))
+            if verbose:
+                print(f"Using mean_anomaly from `mean_anomaly` column, value = {mean_anomaly}")
+        elif "mean_per_ano" in input_params:
+            mean_anomaly = float(input_params.get("mean_per_ano", 0))
+            if verbose:
+                print(f"Using mean_anomaly from `mean_per_ano` column, value = {mean_anomaly}")
+
+        esigma_params = dict(
+            mass1=float(input_params["mass1"]),
+            mass2=float(input_params["mass2"]),
+            f_lower=float(input_params["f_lower"]),
+            delta_t=float(input_params["delta_t"]),
+            spin1z=float(input_params.get("spin1z", 0)),
+            spin2z=float(input_params.get("spin2z", 0)),
+            eccentricity=eccentricity,
+            mean_anomaly=mean_anomaly,
+            coa_phase=float(input_params.get("coa_phase", 0)),
+            distance=float(input_params.get("distance", 1.0)),
+            inclination=float(input_params.get("inclination", 0)),
+            # even thought we specify them, the inspiral ESIGMA methods
+            # will ignore the following arguments
+            mode_to_align_by=input_params.get("mode_to_align_by", (2, 2)),
+            include_conjugate_modes=input_params.get("include_conjugate_modes", True),
+            f_mr_transition=input_params.get("f_mr_transition", None),
+            f_window_mr_transition=input_params.get("f_window_mr_transition", None),
+            num_hyb_orbits=input_params.get("num_hyb_orbits", 0.25),
+            hybridize_using_avg_orbital_frequency=input_params.get(
+                "hybridize_using_avg_orbital_frequency", True
+            ),
+            hybridize_aligning_merger_to_inspiral=input_params.get(
+                "hybridize_aligning_merger_to_inspiral", True
+            ),
+            keep_f_mr_transition_at_center=input_params.get(
+                "keep_f_mr_transition_at_center", False
+            ),
+            merger_ringdown_approximant=input_params.get(
+                "merger_ringdown_approximant", "NRSur7dq4"
+            ),
+            return_hybridization_info=input_params.get(
+                "return_hybridization_info", False
+            ),
+            return_orbital_params=input_params.get("return_orbital_params", False),
+            failsafe=input_params.get("failsafe", True),
+            verbose=input_params.get("verbose", False),
+        )
+
+        try:
+            if input_params["approximant"] == "IMRESIGMAHM":
+                hp, hc = esigma_utils.get_imr_esigma_waveform(
+                    **esigma_params, modes_to_use=[(2, 2), (2, 1), (3, 3), (3, 2), (4, 4), (4, 3)]
+                )
+            elif input_params["approximant"] == "IMRESIGMA":
+                hp, hc = esigma_utils.get_imr_esigma_waveform(
+                    **esigma_params, modes_to_use=[(2, 2)]
+                )
+            elif input_params["approximant"] == "InspiralESIGMAHM":
+                hp, hc = esigma_utils.get_inspiral_esigma_waveform(
+                    **esigma_params,
+                    modes_to_use=[(2, 2), (2, 1), (3, 3), (3, 2), (4, 4), (4, 3)],
+                )
+            elif input_params["approximant"] == "InspiralESIGMA":
+                hp, hc = esigma_utils.get_inspiral_esigma_waveform(
+                    **esigma_params, modes_to_use=[(2, 2)]
+                )
+            if hp is None or hc is None:
+                raise IOError(
+                    f"Approximant {input_params['approximant']} not supported"
+                )
+            return hp, hc
+        except Exception as exc:
+            try:
+                print(f"Going to generate ESIGMA with SEOBNRv4PHM, Modes used: (2,2), (2,1), (3,3), (4,4)")
+                esigma_params["merger_ringdown_approximant"] = "SEOBNRv4PHM"
+                if input_params["approximant"] == "IMRESIGMAHM":
+                    hp, hc = esigma_utils.get_imr_esigma_waveform(
+                        **esigma_params, modes_to_use=[(2, 2), (2, 1), (3, 3), (4, 4)]
+                    )
+                elif input_params["approximant"] == "IMRESIGMA":
+                    hp, hc = esigma_utils.get_imr_esigma_waveform(
+                        **esigma_params, modes_to_use=[(2, 2)]
+                    )
+                else:
+                    print(f"""Failed to generate waveform with input_params={input_params},
+with errors: {exc}""")
+                    return None, None
+                return hp, hc
+            except Exception as exc2:
+                print(f"""Failed to generate waveform with input_params={input_params},
+with errors: {exc}
+and: {exc2}""")
+                return None, None
     else:
-        required = parameters.td_required
-    check_args(input_params, required)
-    return wav_gen(**input_params)
+        wav_gen = td_wav[type(_scheme.mgr.state)]
+        if input_params['approximant'] not in wav_gen:
+            raise ValueError("Approximant %s not available" %
+                                (input_params['approximant']))
+        wav_gen = wav_gen[input_params['approximant']]
+        if hasattr(wav_gen, 'required'):
+            required = wav_gen.required
+        else:
+            required = parameters.td_required
+        check_args(input_params, required)
+        return wav_gen(**input_params)
 
 get_td_waveform.__doc__ = get_td_waveform.__doc__.format(
     params=parameters.td_waveform_params.docstr(prefix="    ",
            include_label=False).lstrip(' '))
+
+cpu_td.update(
+    {
+        "InspiralESIGMA": get_td_waveform,
+        "InspiralESIGMAHM": get_td_waveform,
+        "IMRESIGMA": get_td_waveform,
+        "IMRESIGMAHM": get_td_waveform,
+    }
+)
 
 def get_fd_waveform(template=None, **kwargs):
     """Return a frequency domain gravitational waveform.
@@ -1304,6 +1430,7 @@ def get_two_pol_waveform_filter(outplus, outcross, template, **kwargs):
         # N: number of time samples required
         N = (n-1)*2
         delta_f = 1.0 / (N * input_params['delta_t'])
+
         wav_gen = td_wav[type(_scheme.mgr.state)]
         hp, hc = wav_gen[input_params['approximant']](**input_params)
         # taper the time series hp if required
