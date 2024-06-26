@@ -655,26 +655,21 @@ def get_td_waveform(template=None, **kwargs):
             return_orbital_params=input_params.get("return_orbital_params", False),
             failsafe=input_params.get("failsafe", True),
             verbose=input_params.get("verbose", False),
+            modes_to_use=input_params.get("modes_to_use", [])
         )
+        if len(esigma_params["modes_to_use"]) == 0:
+            if input_params["merger_ringdown_approximant"] == "SEOBNRv4PHM":
+                esigma_params["modes_to_use"] = [(2, 2), (2, 1), (3, 3), (4, 4)]
+            elif input_params["merger_ringdown_approximant"] == "NRSur7dq4":
+                esigma_params["modes_to_use"] = [(2, 2), (2, 1), (3, 3), (3, 2), (4, 4), (4, 3)]
+            if not input_params["approximant"].endswith("HM"):
+                esigma_params["modes_to_use"] = [(2, 2)]
 
         try:
-            if input_params["approximant"] == "IMRESIGMAHM":
-                hp, hc = esigma_utils.get_imr_esigma_waveform(
-                    **esigma_params, modes_to_use=[(2, 2), (2, 1), (3, 3), (3, 2), (4, 4), (4, 3)]
-                )
-            elif input_params["approximant"] == "IMRESIGMA":
-                hp, hc = esigma_utils.get_imr_esigma_waveform(
-                    **esigma_params, modes_to_use=[(2, 2)]
-                )
-            elif input_params["approximant"] == "InspiralESIGMAHM":
-                hp, hc = esigma_utils.get_inspiral_esigma_waveform(
-                    **esigma_params,
-                    modes_to_use=[(2, 2), (2, 1), (3, 3), (3, 2), (4, 4), (4, 3)],
-                )
-            elif input_params["approximant"] == "InspiralESIGMA":
-                hp, hc = esigma_utils.get_inspiral_esigma_waveform(
-                    **esigma_params, modes_to_use=[(2, 2)]
-                )
+            if "IMRESIGMA" in input_params["approximant"]:
+                hp, hc = esigma_utils.get_imr_esigma_waveform(**esigma_params)
+            elif "InspiralESIGMA" in input_params["approximant"]:
+                hp, hc = esigma_utils.get_inspiral_esigma_waveform(**esigma_params)
             if hp is None or hc is None:
                 raise IOError(
                     f"Approximant {input_params['approximant']} not supported"
@@ -685,13 +680,11 @@ def get_td_waveform(template=None, **kwargs):
                 print(f"Going to generate ESIGMA with SEOBNRv4PHM, Modes used: (2,2), (2,1), (3,3), (4,4)")
                 esigma_params["merger_ringdown_approximant"] = "SEOBNRv4PHM"
                 if input_params["approximant"] == "IMRESIGMAHM":
-                    hp, hc = esigma_utils.get_imr_esigma_waveform(
-                        **esigma_params, modes_to_use=[(2, 2), (2, 1), (3, 3), (4, 4)]
-                    )
+                    esigma_params["modes_to_use"] = [(2, 2), (2, 1), (3, 3), (4, 4)]
+                    hp, hc = esigma_utils.get_imr_esigma_waveform(**esigma_params)
                 elif input_params["approximant"] == "IMRESIGMA":
-                    hp, hc = esigma_utils.get_imr_esigma_waveform(
-                        **esigma_params, modes_to_use=[(2, 2)]
-                    )
+                    esigma_params["modes_to_use"] = [(2, 2)]
+                    hp, hc = esigma_utils.get_imr_esigma_waveform(**esigma_params)
                 else:
                     print(f"""Failed to generate waveform with input_params={input_params},
 with errors: {exc}""")
