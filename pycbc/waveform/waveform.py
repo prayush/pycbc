@@ -658,9 +658,9 @@ def get_td_waveform(template=None, **kwargs):
             modes_to_use=input_params.get("modes_to_use", [])
         )
         if len(esigma_params["modes_to_use"]) == 0:
-            if input_params["merger_ringdown_approximant"] == "SEOBNRv4PHM":
+            if esigma_params["merger_ringdown_approximant"] == "SEOBNRv4PHM":
                 esigma_params["modes_to_use"] = [(2, 2), (2, 1), (3, 3), (4, 4)]
-            elif input_params["merger_ringdown_approximant"] == "NRSur7dq4":
+            elif esigma_params["merger_ringdown_approximant"] == "NRSur7dq4":
                 esigma_params["modes_to_use"] = [(2, 2), (2, 1), (3, 3), (3, 2), (4, 4), (4, 3)]
             if not input_params["approximant"].endswith("HM"):
                 esigma_params["modes_to_use"] = [(2, 2)]
